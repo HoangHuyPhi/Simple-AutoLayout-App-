@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// String: Are you ready for loads and loads of fun! Don't wait any longer, we hope to see you in out store soon.
+
 class ViewController: UIViewController {
     let imageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "bear_first"))
@@ -23,18 +23,56 @@ class ViewController: UIViewController {
         textView.isEditable = false
         textView.isSelectable = false
         textView.isScrollEnabled = false
+        // open autolayout for description text view
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center
         return textView
+    }()
+    let prevButton: UIButton = {
+        let Button = UIButton()
+        Button.setTitle("PREVIOUS", for: .normal)
+        Button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        Button.setTitleColor(.red, for: .normal)
+        Button.translatesAutoresizingMaskIntoConstraints = false
+        return Button
+    }()
+    let nextButton : UIButton = {
+        let Button = UIButton()
+        Button.setTitle("NEXT", for: .normal)
+        Button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        Button.setTitleColor(.blue, for: .normal)
+        Button.translatesAutoresizingMaskIntoConstraints = false
+        return Button
+    }()
+    let pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = 4
+        pageControl.currentPageIndicatorTintColor = .yellow
+        pageControl.pageIndicatorTintColor = .gray
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        return pageControl
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = .white
-        addSubViews()
+        view.addSubview(Desciption)
         setUpAutoLayout()
 }
     func setUpAutoLayout() {
+        // Create bottomContainer Stack View to stack prevButton, nextButton and pageControl
+        let bottomContainer = UIStackView()
+        bottomContainer.translatesAutoresizingMaskIntoConstraints = false
+        bottomContainer.distribution = .fillEqually
+        view.addSubview(bottomContainer)
+        bottomContainer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        bottomContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        bottomContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        bottomContainer.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        bottomContainer.addArrangedSubview(prevButton)
+        bottomContainer.addArrangedSubview(pageControl)
+        bottomContainer.addArrangedSubview(nextButton)
         // Create imageContainer
         let imageContainer = UIView()
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -52,9 +90,6 @@ class ViewController: UIViewController {
         Desciption.topAnchor.constraint(equalTo: imageContainer.bottomAnchor).isActive = true
         Desciption.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
         Desciption.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-    }
-    func addSubViews() {
-        view.addSubview(Desciption)
     }
 }
 
