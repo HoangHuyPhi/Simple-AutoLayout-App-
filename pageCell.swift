@@ -9,13 +9,25 @@
 import UIKit
 
 class pageCell: UICollectionViewCell {
-    let imageView: UIImageView = {
+    var page: Page? {
+        didSet {
+            guard let page = page else {
+                return
+            }
+            imageView.image = UIImage(named: page.imageName)
+            let attributedText = NSMutableAttributedString(string: page.headerText, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15)])
+            attributedText.append(NSAttributedString(string: "\n\n\n\(page.bodyText)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray, NSMutableAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]))
+            Desciption.attributedText = attributedText
+            Desciption.textAlignment = .center
+        }
+    }
+    private let imageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "bear_first"))
         // open auto layout for imageView
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    let Desciption: UITextView = {
+    private let Desciption: UITextView = {
         let textView = UITextView()
         let attributedText = NSMutableAttributedString(string: "Join us today in our fun and games!", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15)])
         attributedText.append(NSAttributedString(string: "\n\nAre you ready for loads and loads of fun!\nDon't wait any longer,\nwe hope to see you in out store soon.", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray, NSMutableAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]))

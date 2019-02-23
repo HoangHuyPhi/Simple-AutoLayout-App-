@@ -8,8 +8,8 @@
 
 import UIKit
 
-
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    let pages = [Page(imageName: "bear_first", headerText: "Join us today in our fun and games!", bodyText: "Hey Hey Hey"), Page(imageName: "heart_second", headerText: "Why not?", bodyText: "Hu Hu Hu"), Page(imageName: "leaf_third", headerText: "English is so hard", bodyText: "Ha Ha Ha")]
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .red
@@ -17,10 +17,12 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         collectionView?.isPagingEnabled = true
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return pages.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellPage", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellPage", for: indexPath) as! pageCell
+        let page = pages[indexPath.item]
+        cell.page = page
         return cell
     }
     // height of cell
